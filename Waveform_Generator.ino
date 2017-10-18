@@ -15,7 +15,7 @@ float freq = 10;
 unsigned long start_time;
 
 void setup() {
-  uint16_t Fs = 1024;
+  uint16_t Fs = 44100;
   analogWriteResolution(10);
   Ts = 1.0/(float)Fs;
   freq = 440.0;
