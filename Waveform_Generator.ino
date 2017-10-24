@@ -13,8 +13,8 @@ void setup() {
   uint16_t Fs = 44100;    //Declaring Sample Rate Variable
   analogWriteResolution(10);  //Setting DAC Resolution to its maximum value for the Arduino Zero
   Ts = 1.0/(float)Fs;         //Calculating Period
-  freq = 441;       //Setting clock frequency
-  tcConfigure(freq); //configure the timer to run at <freq>Hertz
+  freq = 440;       //Setting clock frequency
+  tcConfigure(Fs); //configure the timer to run at <freq>Hertz
   tcStartCounter(); //starts the timer
 }
 
