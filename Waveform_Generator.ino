@@ -2,7 +2,7 @@
 This sketch illustrates how to set a timer on an SAMD21 based board in Arduino (Feather M0, Arduino Zero should work)
 */
 const int dacPIN = DAC0;  //Assign Output Pin to Pin A0
-uint32_t sampleRate = 50; //sample rate of the sine wave in Hertz, how many times per second the TC5_Handler() function gets called per second basically
+uint32_t sampleRate = 1; //sample rate of the sine wave in Hertz, how many times per second the TC5_Handler() function gets called per second basically
 
 
 bool state = 0; //just for an example
@@ -33,11 +33,11 @@ void loop() {
 void TC5_Handler (void) {
   //YOUR CODE HERE 
   
-   static int16_t n = 0;    // Declaring variable n as a 16-bit integer
+   static uint16_t n = 0;    // Declaring variable n as an unsigned 16-bit integer
+   uint16_t sig = (uint16_t)(511.5*(cos(2*PI*freq*n*Ts)+1.0));   //Declaring signal variable sig, assigning a value of cos with the parameters provided in the instructions all added with 1 to give a positive value and multiplied by 2047 (1023?) to properly scale the output for the DAC
+   analogWrite(dacPIN, sig);  //Writing the output through the DAC to dacPIN (pin A0)
    n++;                     //Incrementing n
    if (n>65535) n = 0;      //65536 is 2^16, maximum value of a 16-bit number
-   uint16_t sig = (uint16_t)(1023*(cos(2*PI*freq*n*Ts)+1.0));   //Declaring signal variable sig, assigning a value of cos with the parameters provided in the instructions all added with 1 to give a positive value and multiplied by 2047 (1023?) to properly scale the output for the DAC
-   analogWrite(dacPIN, sig);  //Writing the output through the DAC to dacPIN (pin A0)
    
   // END OF YOUR CODE
   
